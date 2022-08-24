@@ -103,4 +103,11 @@ class LunchTest {
         assertTrue(lunch.getLunch("test").equals("Complete"));
     }
 
+    @custom // @Test , Tag("local") 어노테이션 생략가능
+    @DisplayName("커스텀 태그")
+    void custom_tag_ex() {
+        Lunch lunch = new Lunch();
+        assertTrue(lunch.getLunch("test").equals("Complete"));
+    }
+
 }
