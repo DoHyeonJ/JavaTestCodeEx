@@ -1,6 +1,7 @@
 package com.example.testcodeex;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
@@ -82,6 +83,22 @@ class LunchTest {
     @DisplayName("조건에 맞춰 실행 - 어노테이션 Variable")
     @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "LOCAL")
     void enabled_environment_variable_ex() {
+        Lunch lunch = new Lunch();
+        assertTrue(lunch.getLunch("test").equals("Complete"));
+    }
+
+    @Test
+    @DisplayName("태깅 그룹 local")
+    @Tag("local")
+    void tag_local_ex() {
+        Lunch lunch = new Lunch();
+        assertTrue(lunch.getLunch("test").equals("Complete"));
+    }
+
+    @Test
+    @DisplayName("태깅 그룹 dev")
+    @Tag("dev")
+    void tag_dev_ex() {
         Lunch lunch = new Lunch();
         assertTrue(lunch.getLunch("test").equals("Complete"));
     }
