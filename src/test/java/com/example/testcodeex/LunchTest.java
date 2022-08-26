@@ -1,12 +1,15 @@
 package com.example.testcodeex;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
 
@@ -109,5 +112,24 @@ class LunchTest {
         Lunch lunch = new Lunch();
         assertTrue(lunch.getLunch("test").equals("Complete"));
     }
+
+    @DisplayName("테스트 코드 반복하기")
+    @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}") // 10번의 테스트 반복
+    void repeat_ex(RepetitionInfo repetitionInfo) { // 매개변수 통하여 현재 테스트 정보를 얻어옴
+        System.out.println("현재 " + repetitionInfo.getTotalRepetitions() + " 개의 테스트중 " + // 총 테스트 수
+                repetitionInfo.getCurrentRepetition() + " 번 실행중"); // 현재 진행중인 테스트 번호
+    }
+
+    @DisplayName("테스트 코드 반복하기")
+    @ParameterizedTest(name = "{index} {displayName} param={0}")
+    @ValueSource(strings = {"테스트", "코드", "매개", "변수"})
+    @EmptySource
+    @NullSource
+    @NullAndEmptySource
+    void parameterized_ex(String param) {
+        System.out.println(param);
+    }
+
+
 
 }
