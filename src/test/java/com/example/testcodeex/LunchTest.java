@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS) // 테스트 클래스당 인스턴스를 하나만 만들어 사용한다.
 class LunchTest {
 
     @Test
@@ -123,13 +124,26 @@ class LunchTest {
     @DisplayName("테스트 코드 반복하기")
     @ParameterizedTest(name = "{index} {displayName} param={0}")
     @ValueSource(strings = {"테스트", "코드", "매개", "변수"})
-    @EmptySource
-    @NullSource
     @NullAndEmptySource
     void parameterized_ex(String param) {
         System.out.println(param);
     }
 
+    int value = 1;
+
+    @custom
+    @DisplayName("테스트 인스턴스")
+    void instance_ex() {
+        System.out.println("value test1 = " + value++);
+        System.out.println("instance test1 = " + this);
+    }
+
+    @custom
+    @DisplayName("테스트 인스턴스2")
+    void instance2_ex() {
+        System.out.println("value test2 = " + value++);
+        System.out.println("instance test1 = " + this);
+    }
 
 
 }
