@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS) // 테스트 클래스당 인스턴스를 하나만 만들어 사용한다.
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class LunchTest {
 
     @Test
@@ -143,6 +144,27 @@ class LunchTest {
     void instance2_ex() {
         System.out.println("value test2 = " + value++);
         System.out.println("instance test1 = " + this);
+    }
+
+    @Order(1)
+    @custom
+    @DisplayName("테스트 순서 1")
+    void order1_ex() {
+        System.out.println("첫번째 테스트");
+    }
+
+    @Order(3)
+    @custom
+    @DisplayName("테스트 순서 3")
+    void order3_ex() {
+        System.out.println("세번째 테스트");
+    }
+
+    @Order(2)
+    @custom
+    @DisplayName("테스트 순서 2")
+    void order2_ex() {
+        System.out.println("두번째 테스트");
     }
 
 
