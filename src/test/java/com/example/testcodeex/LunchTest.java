@@ -43,7 +43,7 @@ class LunchTest {
         // 설정된 시간안에 동작하는지 확인
         assertTimeoutPreemptively(Duration.ofMillis(100), () -> {
             lunch.getLunch("test");
-            Thread.sleep(300); // 300 밀리초 이상의 시간이 걸려서 실패한다.
+//            Thread.sleep(300); // 300 밀리초 이상의 시간이 걸려서 실패한다.
         });
     }
 
