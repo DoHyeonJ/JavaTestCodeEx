@@ -5,10 +5,10 @@ import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Duration;
@@ -17,9 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 
+@ExtendWith(FindSlowTestExtension.class) // 선언적인 등록방법 [확장모델]
 @TestInstance(TestInstance.Lifecycle.PER_CLASS) // 테스트 클래스당 인스턴스를 하나만 만들어 사용한다.
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class LunchTest {
+
+//    프로그래밍적으로 등록하여 사용하는 방법 -> 커스터마이징이 가능하다.
+//    @RegisterExtension
+//    static FindSlowTestExtension findSlowTestExtension = new FindSlowTestExtension(1000L);
 
     @Test
     @DisplayName("점심추천 만들기")
@@ -49,7 +54,8 @@ class LunchTest {
 
     @Test
     @DisplayName("조건에 맞춰 실행 - 함수")
-    void assume_ex() {
+    void assume_ex() throws InterruptedException {
+        Thread.sleep(1005L); // public static native void sleep(long millis) throws InterruptedException; 문구를 출력하게됨
         Lunch lunch = new Lunch();
         String test_env = "LOCAL"; // 이 변수를 환경변수를 통해 값을 가져와서 활용할 수 있다.
         assumeTrue("LOCAL".equals(test_env));
@@ -147,21 +153,18 @@ class LunchTest {
     }
 
     @Order(1)
-    @custom
     @DisplayName("테스트 순서 1")
     void order1_ex() {
         System.out.println("첫번째 테스트");
     }
 
     @Order(3)
-    @custom
     @DisplayName("테스트 순서 3")
     void order3_ex() {
         System.out.println("세번째 테스트");
     }
 
     @Order(2)
-    @custom
     @DisplayName("테스트 순서 2")
     void order2_ex() {
         System.out.println("두번째 테스트");
